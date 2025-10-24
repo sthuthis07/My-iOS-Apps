@@ -37,10 +37,10 @@ final class TimerViewModel: ObservableObject, TimerDisplayLogic {
     
     func startTapped() {
         guard let interactor else {
-            print("Interactor is nil")
+            debugPrint("Interactor is nil")
             return
         }
-        print("Timer started - vm")
+        debugPrint("Timer started - vm")
         interactor
             .handle(.setPickers(hour: hours, minute: minutes, second: seconds))
         interactor.handle(.start)
