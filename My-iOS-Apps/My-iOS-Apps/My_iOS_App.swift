@@ -1,6 +1,6 @@
 //
 //  TimerApp_Index_AppApp.swift
-//  TimerApp-Index App
+//  My-iOS-Apps
 //
 //  Created by Sthuthi S on 01/10/25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct TimerApp_Index_AppApp: App {
+struct My_iOS_App: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

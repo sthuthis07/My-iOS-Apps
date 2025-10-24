@@ -1,6 +1,6 @@
 //
 //  TimerViewModel.swift
-//  TimerApp-Index App
+//  My-iOS-Apps
 //
 //  Created by Sthuthi S on 04/10/25.
 //

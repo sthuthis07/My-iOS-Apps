@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		B1F908792E8D0BCF00C4F2DB /* TimerApp-Index App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TimerApp-Index App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1F908792E8D0BCF00C4F2DB /* My-iOS-Apps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My-iOS-Apps.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B1F9087B2E8D0BCF00C4F2DB /* TimerApp-Index App */ = {
+		B1F9087B2E8D0BCF00C4F2DB /* My-iOS-Apps */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "TimerApp-Index App";
+			path = "My-iOS-Apps";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		B1F908702E8D0BCF00C4F2DB = {
 			isa = PBXGroup;
 			children = (
-				B1F9087B2E8D0BCF00C4F2DB /* TimerApp-Index App */,
+				B1F9087B2E8D0BCF00C4F2DB /* My-iOS-Apps */,
 				B1F9087A2E8D0BCF00C4F2DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		B1F9087A2E8D0BCF00C4F2DB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B1F908792E8D0BCF00C4F2DB /* TimerApp-Index App.app */,
+				B1F908792E8D0BCF00C4F2DB /* My-iOS-Apps.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B1F908782E8D0BCF00C4F2DB /* TimerApp-Index App */ = {
+		B1F908782E8D0BCF00C4F2DB /* My-iOS-Apps */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B1F908842E8D0BD300C4F2DB /* Build configuration list for PBXNativeTarget "TimerApp-Index App" */;
+			buildConfigurationList = B1F908842E8D0BD300C4F2DB /* Build configuration list for PBXNativeTarget "My-iOS-Apps" */;
 			buildPhases = (
 				B1F908752E8D0BCF00C4F2DB /* Sources */,
 				B1F908762E8D0BCF00C4F2DB /* Frameworks */,
@@ -61,13 +61,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B1F9087B2E8D0BCF00C4F2DB /* TimerApp-Index App */,
+				B1F9087B2E8D0BCF00C4F2DB /* My-iOS-Apps */,
 			);
-			name = "TimerApp-Index App";
+			name = "My-iOS-Apps";
 			packageProductDependencies = (
 			);
-			productName = "TimerApp-Index App";
-			productReference = B1F908792E8D0BCF00C4F2DB /* TimerApp-Index App.app */;
+			productName = "My-iOS-Apps";
+			productReference = B1F908792E8D0BCF00C4F2DB /* My-iOS-Apps.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B1F908742E8D0BCF00C4F2DB /* Build configuration list for PBXProject "TimerApp-Index App" */;
+			buildConfigurationList = B1F908742E8D0BCF00C4F2DB /* Build configuration list for PBXProject "My-iOS-Apps" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B1F908782E8D0BCF00C4F2DB /* TimerApp-Index App */,
+				B1F908782E8D0BCF00C4F2DB /* My-iOS-Apps */,
 			);
 		};
 /* End PBXProject section */
@@ -305,7 +305,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B1F908742E8D0BCF00C4F2DB /* Build configuration list for PBXProject "TimerApp-Index App" */ = {
+		B1F908742E8D0BCF00C4F2DB /* Build configuration list for PBXProject "My-iOS-Apps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B1F908822E8D0BD300C4F2DB /* Debug */,
@@ -314,7 +314,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B1F908842E8D0BD300C4F2DB /* Build configuration list for PBXNativeTarget "TimerApp-Index App" */ = {
+		B1F908842E8D0BD300C4F2DB /* Build configuration list for PBXNativeTarget "My-iOS-Apps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B1F908852E8D0BD300C4F2DB /* Debug */,
