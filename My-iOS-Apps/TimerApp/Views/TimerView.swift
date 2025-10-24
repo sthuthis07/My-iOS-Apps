@@ -24,16 +24,25 @@ struct TimerView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            if viewModel.showPicker {
-                CustomTimePicker(
-                    hour: $viewModel.hours,
-                    minute: $viewModel.minutes,
-                    second: $viewModel.seconds
-                )
-            } else {
-                TimeRemaningView(vm: viewModel)
-            }
+            TimerPickerView(viewModel: viewModel)
             ButtonsView(vm: viewModel)
+        }
+    }
+}
+
+struct TimerPickerView: View {
+    
+    @StateObject var viewModel: TimerViewModel
+    
+    var body: some View {
+        if viewModel.showPicker {
+            CustomTimePicker(
+                hour: $viewModel.hours,
+                minute: $viewModel.minutes,
+                second: $viewModel.seconds
+            )
+        } else {
+            TimeRemaningView(vm: viewModel)
         }
     }
 }
