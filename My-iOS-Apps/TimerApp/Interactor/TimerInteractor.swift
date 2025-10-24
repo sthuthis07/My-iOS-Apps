@@ -14,84 +14,95 @@ protocol TimerInteractorProtocol {
 final class TimerInteractor: TimerInteractorProtocol {
     var presenter: TimerPresentationLogic?
     
-    private var hour: Int = 0
-    private var minute: Int = 1
-    private var second: Int = 0
-    private var isRunning: Bool = false
-    private var remainingTime: Int = 0
-    private var showPicker: Bool = true
+    
+    // Adding single source of truth for state management
+    private struct State {
+        var hour: Int = 0
+        var minute: Int = 1
+        var second: Int = 0
+        var isRunning: Bool = false
+        var remainingTime: Int = 0
+        var showPicker: Bool = true
+        var timer: Timer?
+    }
+    
+    private var state = State()
     private var timer: Timer?
     
     func handle(_ request: TimerModels.Request) {
         switch request {
         case .setPickers(let hour, let minute, let second):
-            self.hour = hour
-            self.minute = minute
-            self.second = second
-            self.remainingTime = hour * 3600 + minute * 60 + second
-            self.showPicker = true
+            let rem = hour * 3600 + minute * 60 + second
+            state = State(
+                hour: hour,
+                minute: minute,
+                second: second,
+                isRunning: state.isRunning,
+                remainingTime: rem,
+                showPicker: true
+            )
             presentState()
         case .start:
             startTimerIfNeeded()
             presentState()
         case .pause:
+            timer?.invalidate()
             pauseTimer()
             presentState()
         case .reset:
+            timer?.invalidate()
             resetTimer()
             presentState()
         case .stop:
+            timer?.invalidate()
             stopTimer()
             presentState()
         }
     }
     
     func startTimerIfNeeded() {
-        print("Timer Started!")
-        if remainingTime == 0 {
-            remainingTime = hour * 3600 + minute * 60 + second
+        debugPrint("Timer Started!")
+        if state.remainingTime == 0 {
+            state.remainingTime = state.hour * 3600 + state.minute * 60 + state.second
         }
-        isRunning = true
-        showPicker = false
+        state.isRunning = true
+        state.showPicker = false
         
         timer?.invalidate() // Invalidate any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            if self.remainingTime > 0 {
-                self.remainingTime -= 1
+            if self.state.remainingTime > 0 {
+                self.state.remainingTime -= 1
                 self.presentState()
             } else {
                 self.timer?.invalidate()
-                self.isRunning = false
+                self.state.isRunning = false
                 self.presentState()
             }
         }
     }
     func pauseTimer() {
-        isRunning = false
-        timer?.invalidate()
+        state.isRunning = false
     }
     func resetTimer() {
-        isRunning = false
-        remainingTime = hour * 3600 + minute * 60 + second
-        showPicker = false
-        timer?.invalidate()
+        state.isRunning = false
+        state.remainingTime = state.hour * 3600 + state.minute * 60 + state.second
+        state.showPicker = false
     }
     func stopTimer() {
-        isRunning = false
-        timer?.invalidate()
-        remainingTime = 0
-        showPicker = true
+        state.isRunning = false
+        state.remainingTime = 0
+        state.showPicker = true
     }
     func presentState() {
-        print("Present state timer started")
+        debugPrint("Present state timer started")
         let response = TimerModels.Response(
-            remaningTime: remainingTime,
-            isRunning: isRunning,
-            showPicker: showPicker,
-            hour: hour,
-            minute: minute,
-            second: second
+            remaningTime: state.remainingTime,
+            isRunning: state.isRunning,
+            showPicker: state.showPicker,
+            hour: state.hour,
+            minute: state.minute,
+            second: state.second
         )
         
         Task { [weak self] in
