@@ -30,8 +30,6 @@ struct ButtonsView: View {
                 } else {
 //                    Text("Start")
                     Image(systemName: "play.fill")
-                        .frame(width: 20, height: 20)
-                }
             }
             .buttonStyle(.borderedProminent)
             .tint((timerViewModel.isRunning) ? .yellow : .green)
@@ -46,8 +44,6 @@ struct ButtonsView: View {
             .buttonStyle(.borderedProminent)
             .opacity(0.75)
             Button {
-                timerViewModel.stopTapped()
-            } label: {
 //                Text("Cancel")
                 Image(systemName: "xmark")
                     .frame(width: 20, height: 20)
