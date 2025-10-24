@@ -16,42 +16,58 @@ struct ButtonsView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            Button {
-                if !timerViewModel.isRunning {
-                    timerViewModel.startTapped()
-                } else {
-                    timerViewModel.pauseTapped()
-                }
-            } label: {
-                if timerViewModel.isRunning {
-//                    Text("Pause")
-                    Image(systemName: "pause.fill")
-                        .frame(width: 20, height: 20)
-                } else {
-//                    Text("Start")
-                    Image(systemName: "play.fill")
-            }
-            .buttonStyle(.borderedProminent)
-            .tint((timerViewModel.isRunning) ? .yellow : .green)
-            .opacity(0.75)
-            Button {
-                timerViewModel.resetTapped()
-            } label: {
-//                Text("Reset")
-                Image(systemName: "arrow.counterclockwise")
-                    .frame(width: 20, height: 20)
-            }
-            .buttonStyle(.borderedProminent)
-            .opacity(0.75)
-            Button {
-//                Text("Cancel")
-                Image(systemName: "xmark")
-                    .frame(width: 20, height: 20)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.red)
-            .opacity(0.75)
+            playPauseButton
+            resetButton
+            cancelButton
         }
+    }
+    
+    // MARK: - Buttons
+    /// Play/Pause Button
+    private var playPauseButton: some View {
+        Button {
+            if !timerViewModel.isRunning {
+                timerViewModel.startTapped()
+            } else {
+                timerViewModel.pauseTapped()
+            }
+        } label: {
+            if timerViewModel.isRunning {
+                Image(systemName: "pause.fill")
+                    .frame(width: 20, height: 20)
+            } else {
+                Image(systemName: "play.fill")
+                    .frame(width: 20, height: 20)
+            }
+        }
+        .buttonStyle(.borderedProminent)
+        .tint((timerViewModel.isRunning) ? .yellow : .green)
+        .opacity(0.75)
+    }
+    
+    /// Reset Button
+    private var resetButton: some View {
+        Button {
+            timerViewModel.resetTapped()
+        } label: {
+            Image(systemName: "arrow.counterclockwise")
+                .frame(width: 20, height: 20)
+        }
+        .buttonStyle(.borderedProminent)
+        .opacity(0.75)
+    }
+    
+    /// Cancel Button
+    private var cancelButton: some View {
+        Button {
+            timerViewModel.stopTapped()
+        } label: {
+            Image(systemName: "xmark")
+                .frame(width: 20, height: 20)
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.red)
+        .opacity(0.75)
     }
 }
 
