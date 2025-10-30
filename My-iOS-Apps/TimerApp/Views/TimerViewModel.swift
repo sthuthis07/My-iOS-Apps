@@ -63,23 +63,31 @@ final class TimerViewModel: ObservableObject, TimerDisplayLogic {
     
     func setPickers(hour: Int, minute: Int, second: Int) {
         guard let interactor else { return }
-        self.hours = hour
-        self.minutes = minute
-        self.seconds = second
+        performBatchUpdates {
+            self.hours = hour
+            self.minutes = minute
+            self.seconds = second
+        }
         interactor
             .handle(.setPickers(hour: hour, minute: minute, second: second))
     }
     
     func display(_ viewModel: TimerModels.ViewModel) {
-        self.showPicker = viewModel.showPicker
-        self.timeText = viewModel.timeString
-        self.isRunning = viewModel.isRunning
-        self.hours = viewModel.hour
-        self.minutes = viewModel.minute
-        self.seconds = viewModel.second
+        performBatchUpdates {
+            self.showPicker = viewModel.showPicker
+            self.timeText = viewModel.timeString
+            self.isRunning = viewModel.isRunning
+            self.hours = viewModel.hour
+            self.minutes = viewModel.minute
+            self.seconds = viewModel.second
+        }
     }
     
     private func updateTimeText() {
         timeText = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    private func performBatchUpdates(_ updates: () -> Void) {
+        updates()
     }
 }

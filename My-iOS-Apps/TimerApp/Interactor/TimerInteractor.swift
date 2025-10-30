@@ -14,7 +14,6 @@ protocol TimerInteractorProtocol {
 final class TimerInteractor: TimerInteractorProtocol {
     var presenter: TimerPresentationLogic?
     
-    
     // Adding single source of truth for state management
     private struct State {
         var hour: Int = 0
