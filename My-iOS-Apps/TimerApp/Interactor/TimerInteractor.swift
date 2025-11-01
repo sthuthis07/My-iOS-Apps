@@ -19,14 +19,47 @@ final class TimerInteractor: TimerInteractorProtocol {
         var hour: Int = 0
         var minute: Int = 1
         var second: Int = 0
-        var isRunning: Bool = false
+        var isRunning: Bool = false {
+            didSet {
+                if !isRunning {
+                    timer?.invalidate()
+                }
+            }
+        }
         var remainingTime: Int = 0
         var showPicker: Bool = true
-        var timer: Timer?
+        private var timer: Timer?
+        
+        init(
+            hour: Int = 0,
+            minute: Int = 1,
+            second: Int = 0,
+            isRunning: Bool = false,
+            remainingTime: Int = 0,
+            showPicker: Bool = true
+        ) {
+            self.hour = hour
+            self.minute = minute
+            self.second = second
+            self.isRunning = isRunning
+            self.remainingTime = remainingTime
+            self.showPicker = showPicker
+        }
+        
+        mutating func setTimerAction(action: @escaping (Timer) -> Void ) {
+            timer?.invalidate()
+            timer = Timer
+                .scheduledTimer(
+                    withTimeInterval: 1,
+                    repeats: true,
+                    block: action
+                )
+        }
+        
     }
     
     private var state = State()
-    private var timer: Timer?
+//    private var timer: Timer?
     
     func handle(_ request: TimerModels.Request) {
         switch request {
@@ -45,15 +78,12 @@ final class TimerInteractor: TimerInteractorProtocol {
             startTimerIfNeeded()
             presentState()
         case .pause:
-            timer?.invalidate()
             pauseTimer()
             presentState()
         case .reset:
-            timer?.invalidate()
             resetTimer()
             presentState()
         case .stop:
-            timer?.invalidate()
             stopTimer()
             presentState()
         }
@@ -66,15 +96,12 @@ final class TimerInteractor: TimerInteractorProtocol {
         }
         state.isRunning = true
         state.showPicker = false
-        
-        timer?.invalidate() // Invalidate any existing timer
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        state.setTimerAction { [weak self] _ in
             guard let self = self else { return }
             if self.state.remainingTime > 0 {
                 self.state.remainingTime -= 1
                 self.presentState()
             } else {
-                self.timer?.invalidate()
                 self.state.isRunning = false
                 self.presentState()
             }
@@ -109,8 +136,7 @@ final class TimerInteractor: TimerInteractorProtocol {
             await presenter.present(response)
         }
     }
-    
     deinit {
-        timer?.invalidate()
+        state.isRunning = false
     }
 }
