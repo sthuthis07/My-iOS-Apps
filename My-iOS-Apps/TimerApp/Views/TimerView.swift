@@ -35,11 +35,21 @@ struct TimerPickerView: View {
     @StateObject var viewModel: TimerViewModel
     
     var body: some View {
-        if viewModel.showPicker {
+        if viewModel.state
+            .showPicker {
             CustomTimePicker(
-                hour: $viewModel.hours,
-                minute: $viewModel.minutes,
-                second: $viewModel.seconds
+                hour: Binding<Int>(
+                    get: { viewModel.state.hours },
+                    set: { viewModel.setPickers(hour: $0, minute: viewModel.state.minutes, second: viewModel.state.seconds) }
+                ),
+                minute: Binding<Int>(
+                    get: { viewModel.state.minutes },
+                    set: { viewModel.setPickers(hour: viewModel.state.hours, minute: $0, second: viewModel.state.seconds) }
+                ),
+                second: Binding<Int>(
+                    get: { viewModel.state.seconds },
+                    set: { viewModel.setPickers(hour: viewModel.state.hours, minute: viewModel.state.minutes, second: $0) }
+                )
             )
         } else {
             TimeRemaningView(vm: viewModel)

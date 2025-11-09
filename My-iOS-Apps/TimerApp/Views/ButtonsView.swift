@@ -26,13 +26,13 @@ struct ButtonsView: View {
     /// Play/Pause Button
     private var playPauseButton: some View {
         Button {
-            if !timerViewModel.isRunning {
+            if !timerViewModel.state.isRunning {
                 timerViewModel.startTapped()
             } else {
                 timerViewModel.pauseTapped()
             }
         } label: {
-            if timerViewModel.isRunning {
+            if timerViewModel.state.isRunning {
                 Image(systemName: "pause.fill")
                     .frame(width: 20, height: 20)
             } else {
@@ -41,7 +41,7 @@ struct ButtonsView: View {
             }
         }
         .buttonStyle(.borderedProminent)
-        .tint((timerViewModel.isRunning) ? .yellow : .green)
+        .tint((timerViewModel.state.isRunning) ? .yellow : .green)
         .opacity(0.75)
     }
     

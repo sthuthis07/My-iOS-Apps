@@ -23,34 +23,12 @@ struct CustomTimePicker: View {
     }
 }
 
-struct HourPickerView : View {
-    @Binding var hour: Int
+struct TimePickerView : View {
+    @Binding var time: Int
 
     var body: some View {
-        Picker("Hour", selection: $hour) {
+        Picker("", selection: $time) {
             ForEach(0..<24) { Text("\($0)") }
-        }
-        .frame(width: 50)
-    }
-}
-
-struct MinutePickerView : View {
-    @Binding var minute: Int
-    
-    var body: some View {
-        Picker("Minute", selection: $minute) {
-            ForEach(0..<60) { Text("\($0)") }
-        }
-        .frame(width: 50)
-    }
-}
-
-struct SecondPickerView : View {
-    @Binding var second: Int
-    
-    var body: some View {
-        Picker("Second", selection: $second) {
-            ForEach(0..<60) { Text("\($0)") }
         }
         .frame(width: 50)
     }
@@ -68,11 +46,11 @@ struct CustomTimePickerWheelView : View {
     
     var body: some View {
         HStack {
-            HourPickerView(hour: $hour)
+            TimePickerView(time: $hour)
             separatorTextView
-            MinutePickerView(minute: $minute)
+            TimePickerView(time: $minute)
             separatorTextView
-            SecondPickerView(second: $second)
+            TimePickerView(time: $second)
         }
         .pickerStyle(.wheel)
         .labelsHidden()
