@@ -7,32 +7,61 @@
 
 import Foundation
 
+struct TimerViewState {
+    var timeText: String = "00:01:00"
+    var isRunning: Bool = false
+    var showPicker: Bool = true
+    var hours: Int = 0
+    var minutes: Int = 1
+    var seconds: Int = 0
+
+    func updated(
+        timeText: String? = nil,
+        isRunning: Bool? = nil,
+        showPicker: Bool? = nil,
+        hours: Int? = nil,
+        minutes: Int? = nil,
+        seconds: Int? = nil
+    ) -> TimerViewState {
+        var s = self
+        if let isRunning = isRunning { s.isRunning = isRunning }
+        if let showPicker = showPicker { s.showPicker = showPicker }
+        if let hours = hours { s.hours = hours }
+        if let minutes = minutes { s.minutes = minutes }
+        if let seconds = seconds { s.seconds = seconds }
+        let computed = String(format: "%02d:%02d:%02d", s.hours, s.minutes, s.seconds)
+        s.timeText = timeText ?? computed
+        return s
+    }
+
+    func withHours(_ hours: Int) -> TimerViewState { updated(hours: hours) }
+    func withMinutes(_ minutes: Int) -> TimerViewState { updated(minutes: minutes) }
+    func withSeconds(_ seconds: Int) -> TimerViewState { updated(seconds: seconds) }
+}
+
 @MainActor
 final class TimerViewModel: ObservableObject, TimerDisplayLogic {
-    @Published var timeText: String = "00:01:00"
-    @Published var isRunning: Bool = false
-    @Published var showPicker: Bool = true
-    @Published var hours: Int = 0
-    @Published var minutes: Int = 1
-    @Published var seconds: Int = 0
-    
+    @Published var state = TimerViewState()
+
     var interactor: TimerInteractorProtocol?
     
     private var timer: Timer?
     
     private var totalSeconds: Int {
-        get { hours * 3600 + minutes * 60 + seconds }
+        get { state.hours * 3600 + state.minutes * 60 + state.seconds }
         set {
             let t = max(0, newValue)
-            hours = t / 3600
-            minutes = (t % 3600) / 60
-            seconds = t % 60
-            updateTimeText()
+            var s = state
+            s.hours = t / 3600
+            s.minutes = (t % 3600) / 60
+            s.seconds = t % 60
+            s.timeText = String(format: "%02d:%02d:%02d", s.hours, s.minutes, s.seconds)
+            state = s
         }
     }
     
     init() {
-        updateTimeText()
+        state.timeText = String(format: "%02d:%02d:%02d", state.hours, state.minutes, state.seconds)
     }
     
     func startTapped() {
@@ -41,8 +70,7 @@ final class TimerViewModel: ObservableObject, TimerDisplayLogic {
             return
         }
         debugPrint("Timer started - vm")
-        interactor
-            .handle(.setPickers(hour: hours, minute: minutes, second: seconds))
+        interactor.handle(.setPickers(hour: state.hours, minute: state.minutes, second: state.seconds))
         interactor.handle(.start)
     }
     
@@ -62,32 +90,18 @@ final class TimerViewModel: ObservableObject, TimerDisplayLogic {
     }
     
     func setPickers(hour: Int, minute: Int, second: Int) {
-        guard let interactor else { return }
-        performBatchUpdates {
-            self.hours = hour
-            self.minutes = minute
-            self.seconds = second
-        }
-        interactor
-            .handle(.setPickers(hour: hour, minute: minute, second: second))
+        state = state.updated(hours: hour, minutes: minute, seconds: second)
+        interactor?.handle(.setPickers(hour: hour, minute: minute, second: second))
     }
     
     func display(_ viewModel: TimerModels.ViewModel) {
-        performBatchUpdates {
-            self.showPicker = viewModel.showPicker
-            self.timeText = viewModel.timeString
-            self.isRunning = viewModel.isRunning
-            self.hours = viewModel.hour
-            self.minutes = viewModel.minute
-            self.seconds = viewModel.second
-        }
-    }
-    
-    private func updateTimeText() {
-        timeText = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-    }
-    
-    private func performBatchUpdates(_ updates: () -> Void) {
-        updates()
+        state = state.updated(
+            timeText: viewModel.timeString,
+            isRunning: viewModel.isRunning,
+            showPicker: viewModel.showPicker,
+            hours: viewModel.hour,
+            minutes: viewModel.minute,
+            seconds: viewModel.second
+        )
     }
 }
