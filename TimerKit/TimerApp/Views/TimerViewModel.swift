@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 struct TimerViewState {
     var timeText: String = "00:01:00"

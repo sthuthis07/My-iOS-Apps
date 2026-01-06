@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct TimerView: View {
+public struct TimerView: View {
     @StateObject var viewModel: TimerViewModel
     
-    init() {
+    public init() {
         let vm = TimerViewModel()
         let interactor = TimerInteractor()
         let presenter = TimerPresenter()
@@ -22,7 +22,7 @@ struct TimerView: View {
         _viewModel = StateObject(wrappedValue: vm)
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 20) {
             TimerPickerView(viewModel: viewModel)
             ButtonsView(vm: viewModel)
