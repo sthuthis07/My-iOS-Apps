@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TimerKit
 
 struct IndexView: View {
     
@@ -18,7 +19,7 @@ struct IndexView: View {
             ScrollView {
                 LazyVGrid(columns: adaptiveColumns, spacing: 20) {
                     ForEach(currentApps) { app in
-                        NavigationLink(destination: TimerView()) {
+                        NavigationLink(destination: TimerKit.TimerView()) {
                             VStack {
                                 Image(app.imageName)
                                     .resizable()

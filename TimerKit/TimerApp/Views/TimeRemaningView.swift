@@ -11,7 +11,7 @@ struct TimeRemaningView: View {
     @ObservedObject var vm: TimerViewModel
     
     var body: some View {
-        Text(vm.timeText)
+        Text(vm.state.timeText)
             .font(.largeTitle)
     }
 }
